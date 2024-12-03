@@ -1,0 +1,67 @@
+/* style.css */
+
+/* Hintergrundfarbe des gesamten Dokuments */
+body {
+    background-color: #ffffff;  /* Weißer Hintergrund für das Dokument */
+    padding-bottom: 30px;  /* Padding am unteren Rand des Dokuments */
+}
+
+/* Haupttitel */
+h1 {
+    font-size: 2rem;  /* Schriftgröße des Titels */
+    font-weight: bold;  /* Fettdruck für den Titel */
+    margin-bottom: 30px;  /* Abstand nach unten */
+}
+
+/* Fehlerbereich */
+#errorMessages {
+    color: rgb(206, 0, 0);  /* Rote Farbe für Fehlernachrichten */
+    font-size: 1rem;  /* Schriftgröße der Fehlermeldungen */
+    margin-bottom: 20px;  /* Abstand unter der Fehlermeldung */
+}
+
+/* Beschriftung der Formularfelder (Titel für die Felder) */
+.form-label {
+    font-size: 1.25rem;  /* Vergrößert die Schrift der Titel */
+    font-weight: bold;  /* Fettdruck für die Titel */
+    margin-bottom: 10px;  /* Abstand nach unten */
+    display: block;  /* Blockanzeige für bessere Positionierung */
+}
+
+/* Formularfelder (Eingabefelder und Dropdowns) */
+.form-control {
+    width: 100%;  /* 100% der Containerbreite für alle Formularfelder */
+    margin-bottom: 15px;  /* Abstand zwischen den Formularfeldern */
+}
+
+/* Such-Button */
+button#searchButton {
+    font-size: 1rem;  /* Schriftgröße des Buttons */
+    font-weight: bold;  /* Fettdruck für den Button */
+    padding: 10px 20px;  /* Padding (Abstand) innen im Button */
+}
+
+/* Abstand über den Suchergebnissen */
+#countryInfo {
+    margin-top: 20px;  /* Abstand nach oben zu den Suchergebnissen */
+}
+
+/* Karten in den Suchergebnissen (Accordion-Stil) */
+#countryInfo .card {
+    margin-top: 20px;  /* Abstand nach oben zu jeder Karte */
+    border: 1px solid #888888;  /* Dünner grauer Rand um jede Karte */
+}
+
+/* Flaggen im Accordion-Titel (klein) */
+.accordion .card-header .btn img {
+    width: 60px;  /* Breite der Flagge im Titel */
+    height: auto;  /* Automatische Höhenanpassung der Flagge */
+    margin-right: 15px;  /* Abstand zwischen Flagge und Text */
+}
+
+/* Große Flaggen in den Ergebnissen (im Accordion-Inhalt) */
+.accordion .card-body img {
+    max-width: 200px;  /* Maximale Breite der großen Flagge */
+    height: auto;  /* Automatische Höhenanpassung */
+    margin-top: 15px;  /* Abstand nach oben */
+}
