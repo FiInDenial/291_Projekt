@@ -41,6 +41,23 @@ button#searchButton {
     padding: 10px 20px;  /* Padding (Abstand) innen im Button */
 }
 
+
+/* Roter Eingabe löschen Button */
+#clearButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#clearButton:hover {
+    background-color: darkred;
+}
+
+
 /* Abstand über den Suchergebnissen */
 #countryInfo {
     margin-top: 20px;  /* Abstand nach oben zu den Suchergebnissen */
