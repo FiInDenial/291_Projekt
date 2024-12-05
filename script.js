@@ -18,10 +18,37 @@ document.addEventListener("DOMContentLoaded", () => {
         regionDropdown.value = "";
         countryInfoDiv.innerHTML = "";
         errorMessagesDiv.innerHTML = "";
+        toggleClearButton();
     });
+
+    // Funktion zum Ein- oder Ausblenden des Clear Buttons
+    function toggleClearButton() {
+        if (languageInput.value.trim() || currencyInput.value.trim() || languageDropdown.value || currencyDropdown.value || regionDropdown.value) {
+            clearButton.style.display = "inline-block";
+        } else {
+            clearButton.style.display = "none";
+        }
+    }
+
+    // Den Clear Button initial verstecken, damit er beim Seitenladen nicht sichtbar ist
+    clearButton.style.display = "none";
+
+    // Eingabefelder überwachen und den Clear-Button anzeigen, wenn notwendig
+    languageInput.addEventListener("input", toggleClearButton);
+    currencyInput.addEventListener("input", toggleClearButton);
+    languageDropdown.addEventListener("change", toggleClearButton);
+    currencyDropdown.addEventListener("change", toggleClearButton);
+    regionDropdown.addEventListener("change", toggleClearButton);
+
+    // Fehlernachrichten ausblenden
+    function clearErrorMessages() {
+        errorMessagesDiv.innerHTML = "";
+    }
 
     // Suchfunktion: Sprachen, Währungen und Regionen filtern
     async function fetchLanguageAndCurrencyData() {
+        clearErrorMessages(); // Fehlermeldungen vor jedem neuen Versuch löschen
+
         const language = languageInput.value.trim().toLowerCase();
         const currency = currencyInput.value.trim().toLowerCase();
         const selectedLanguage = languageDropdown.value;
@@ -102,45 +129,59 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
             }).join('');
         } catch (error) {
-            countryInfoDiv.innerHTML = "<p class='text-danger'>Fehler beim Abrufen der Daten oder keine Länder, die den Suchkriterien entsprechen.</p>";
+            errorMessagesDiv.innerHTML = `<p class='text-danger'>Fehler beim Abrufen der Daten: ${error.message}</p>`;
         }
     }
 
-    // Dropdowns für Sprache und Währung befüllen
-    fetch("https://restcountries.com/v3.1/all")
-        .then(response => response.json())
-        .then(data => {
+    // Sprache und Währung-Daten laden
+    async function loadDropdowns() {
+        try {
+            const response = await fetch("https://restcountries.com/v3.1/all");
+            if (!response.ok) throw new Error("Fehler beim Laden der Dropdown-Daten");
+
+            const countryData = await response.json();
             const languages = new Set();
             const currencies = new Set();
+            const regions = new Set();
 
-            data.forEach(country => {
+            countryData.forEach(country => {
                 if (country.languages) {
-                    Object.values(country.languages).forEach(lang => languages.add(lang));
+                    Object.values(country.languages).forEach(language => languages.add(language));
                 }
                 if (country.currencies) {
-                    Object.values(country.currencies).forEach(curr => currencies.add(curr.name));
+                    Object.values(country.currencies).forEach(currency => currencies.add(currency.name));
+                }
+                if (country.region) {
+                    regions.add(country.region);
                 }
             });
 
-            // Alphabetisch sortieren
-            const sortedLanguages = Array.from(languages).sort();
-            const sortedCurrencies = Array.from(currencies).sort();
+            languages.forEach(language => {
+                const option = document.createElement("option");
+                option.value = language;
+                option.textContent = language;
+                languageDropdown.appendChild(option);
+            });
 
-            // Dropdown für Sprachen
-            languageDropdown.innerHTML = `<option value="">Sprache wählen</option>
-                ${sortedLanguages.map(language => `<option value="${language}">${language}</option>`).join('')}`;
+            currencies.forEach(currency => {
+                const option = document.createElement("option");
+                option.value = currency;
+                option.textContent = currency;
+                currencyDropdown.appendChild(option);
+            });
 
-            // Dropdown für Währungen
-            currencyDropdown.innerHTML = `<option value="">Währung wählen</option>
-                ${sortedCurrencies.map(currency => `<option value="${currency}">${currency}</option>`).join('')}`;
+            regions.forEach(region => {
+                const option = document.createElement("option");
+                option.value = region;
+                option.textContent = region;
+                regionDropdown.appendChild(option);
+            });
+        } catch (error) {
+            errorMessagesDiv.innerHTML = `<p class='text-danger'>Fehler beim Laden der Dropdown-Optionen: ${error.message}</p>`;
+        }
+    }
 
-            // Regionen-Dropdown befüllen
-            const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
-            regionDropdown.innerHTML = `<option value="">Region aus der Liste auswählen</option>
-                ${regions.map(region => `<option value="${region.toLowerCase()}">${region}</option>`).join('')}`;
-
-            // Klick-Event für den Such-Button
-            searchButton.addEventListener("click", fetchLanguageAndCurrencyData);
-        })
-        .catch(error => console.error("Fehler beim Initialisieren der Dropdowns:", error));
+    // Initialisiere Dropdowns und Events
+    loadDropdowns();
+    searchButton.addEventListener("click", fetchLanguageAndCurrencyData);
 });
