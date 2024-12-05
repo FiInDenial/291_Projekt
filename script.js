@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </button>
                                 </h2>
                             </div>
-                            <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordionExample">
+                            <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}">
                                 <div class="card-body">
                                     <p><strong>Hauptstadt:</strong> ${country.capital ? country.capital[0] : "Keine Daten"}</p>
                                     <p><strong>Region:</strong> ${country.region}</p>
