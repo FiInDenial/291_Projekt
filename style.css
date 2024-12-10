@@ -1,8 +1,6 @@
-/* style.css */
-
 /* Hintergrundfarbe des gesamten Dokuments */
 body {
-    background-color: #ffffff;  /* Weißer Hintergrund für das Dokument */
+    background-color: #e0e0e0;  /* Weißer Hintergrund für das Dokument */
     padding-bottom: 30px;  /* Padding am unteren Rand des Dokuments */
 }
 
@@ -32,6 +30,16 @@ h1 {
 .form-control {
     width: 100%;  /* 100% der Containerbreite für alle Formularfelder */
     margin-bottom: 15px;  /* Abstand zwischen den Formularfeldern */
+}
+
+/* Roter Rand für ungültige Eingaben */
+.invalid-input {
+    border: 2px solid red;
+}
+
+/* Grüner Rand für gültige Eingaben */
+.valid-input {
+    border: 2px solid green;
 }
 
 /* Such-Button */
@@ -82,5 +90,3 @@ button#searchButton {
     height: auto;  /* Automatische Höhenanpassung */
     margin-top: 15px;  /* Abstand nach oben */
 }
-
-

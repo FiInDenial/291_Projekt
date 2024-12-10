@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landinformationen nach Sprache, Währung und Region</title>
+    <title>Landinformationen nach Sprache und Währung</title>
     <!-- Bootstrap Stylesheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Eigene Styles -->
@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Land nach Sprache, Währung und Region suchen</h1>
+        <h1 class="text-center">Land nach Sprache und Währung suchen</h1>
         <!-- Fehlerbereich -->
         <div id="errorMessages" class="text-center"></div>
         <div class="row justify-content-center">
@@ -20,21 +20,17 @@
                 <div class="form-group">
                     <label for="languageInput" class="form-label">Sprache: Sprache eingeben oder im Dropdown auswählen</label>
                     <input type="text" id="languageInput" class="form-control" placeholder="Sprache eingeben (z.B. German)">
-                    <select id="languageDropdown" class="form-control"></select>
+                    <select id="languageDropdown" class="form-control">
+                        <option value="">Sprache wählen</option>
+                    </select>
                 </div>
 
                 <!-- Währungseingabe und Dropdown -->
                 <div class="form-group">
                     <label for="currencyInput" class="form-label">Währung: Währung eingeben oder im Dropdown auswählen</label>
                     <input type="text" id="currencyInput" class="form-control" placeholder="Währung eingeben (z.B. Euro)">
-                    <select id="currencyDropdown" class="form-control"></select>
-                </div>
-
-                <!-- Regionen-Dropdown -->
-                <div class="form-group">
-                    <label for="regionDropdown" class="form-label">Nach Region filtern</label>
-                    <select id="regionDropdown" class="form-control">
-                        <option value="">Alle Regionen</option>
+                    <select id="currencyDropdown" class="form-control">
+                        <option value="">Währung wählen</option>
                     </select>
                 </div>
 

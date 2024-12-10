@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const currencyInput = document.getElementById("currencyInput");
     const languageDropdown = document.getElementById("languageDropdown");
     const currencyDropdown = document.getElementById("currencyDropdown");
-    const regionDropdown = document.getElementById("regionDropdown");
     const countryInfoDiv = document.getElementById("countryInfo");
     const errorMessagesDiv = document.getElementById("errorMessages");
 
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
         currencyInput.value = "";
         languageDropdown.value = "";
         currencyDropdown.value = "";
-        regionDropdown.value = "";
         countryInfoDiv.innerHTML = "";
         errorMessagesDiv.innerHTML = "";
         toggleClearButton();
@@ -23,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Funktion zum Ein- oder Ausblenden des Clear Buttons
     function toggleClearButton() {
-        if (languageInput.value.trim() || currencyInput.value.trim() || languageDropdown.value || currencyDropdown.value || regionDropdown.value) {
+        if (languageInput.value.trim() || currencyInput.value.trim() || languageDropdown.value || currencyDropdown.value) {
             clearButton.style.display = "inline-block";
         } else {
             clearButton.style.display = "none";
@@ -38,65 +36,63 @@ document.addEventListener("DOMContentLoaded", () => {
     currencyInput.addEventListener("input", toggleClearButton);
     languageDropdown.addEventListener("change", toggleClearButton);
     currencyDropdown.addEventListener("change", toggleClearButton);
-    regionDropdown.addEventListener("change", toggleClearButton);
 
     // Fehlernachrichten ausblenden
     function clearErrorMessages() {
         errorMessagesDiv.innerHTML = "";
     }
 
-    // Suchfunktion: Sprachen, Währungen und Regionen filtern
     async function fetchLanguageAndCurrencyData() {
         clearErrorMessages(); // Fehlermeldungen vor jedem neuen Versuch löschen
-
+    
         const language = languageInput.value.trim().toLowerCase();
         const currency = currencyInput.value.trim().toLowerCase();
-        const selectedLanguage = languageDropdown.value;
-        const selectedCurrency = currencyDropdown.value;
-        const region = regionDropdown.value;
-
-        // Eingaben validieren
-        if ((!language && !selectedLanguage) || (!currency && !selectedCurrency)) {
+        const selectedLanguage = languageDropdown.value.trim().toLowerCase();
+        const selectedCurrency = currencyDropdown.value.trim().toLowerCase();
+    
+        // Überprüfen, ob entweder Eingabe oder Dropdown-Wert ausgefüllt sind
+        const validLanguage = language || selectedLanguage;
+        const validCurrency = currency || selectedCurrency;
+    
+        if (!validLanguage || !validCurrency) {
             errorMessagesDiv.innerHTML = "<p class='text-danger'>Bitte sowohl eine Sprache als auch eine Währung eingeben oder auswählen.</p>";
             return;
         }
-
-        if ((language.length > 0 && language.length < 3) || (currency.length > 0 && currency.length < 3)) {
-            errorMessagesDiv.innerHTML = "<p class='text-danger'>Eingaben müssen mindestens 3 Zeichen lang sein.</p>";
-            return;
-        }
-
+    
         try {
             const response = await fetch("https://restcountries.com/v3.1/all");
             if (!response.ok) throw new Error("Fehler beim Abrufen der Länderinformationen");
-
+    
             const countryData = await response.json();
-
+    
             // Filter anwenden
             const matchingCountries = countryData.filter(country => {
+                // Sprach- und Währungsdaten des Landes holen
                 const countryLanguages = country.languages
                     ? Object.values(country.languages).map(lang => lang.toLowerCase())
                     : [];
                 const countryCurrencies = country.currencies
                     ? Object.values(country.currencies).map(curr => curr.name.toLowerCase())
                     : [];
-                const languageMatch =
-                    countryLanguages.some(lang => lang.includes(language)) ||
-                    (selectedLanguage && countryLanguages.includes(selectedLanguage));
-                const currencyMatch =
-                    countryCurrencies.some(curr => curr.includes(currency)) ||
-                    (selectedCurrency && countryCurrencies.includes(selectedCurrency));
-                const regionMatch = !region || country.region.toLowerCase() === region;
-
-                return languageMatch && currencyMatch && regionMatch;
+    
+                // Prüfen auf exakte Übereinstimmung mit Sprache
+                const languageMatch = validLanguage &&
+                    (countryLanguages.includes(language) || countryLanguages.includes(selectedLanguage));
+    
+                // Prüfen auf exakte Übereinstimmung mit Währung
+                const currencyMatch = validCurrency &&
+                    (countryCurrencies.includes(currency) || countryCurrencies.includes(selectedCurrency));
+    
+                // Nur Länder zurückgeben, die beide Kriterien erfüllen
+                return languageMatch && currencyMatch;
             });
-
+    
             // Ergebnisse anzeigen
             if (matchingCountries.length === 0) {
-                countryInfoDiv.innerHTML = "<p class='text-danger'>Keine Länder mit der angegebenen Sprache, Währung und Region gefunden.</p>";
+                countryInfoDiv.innerHTML = "<p class='text-danger'>Keine Länder mit der angegebenen Sprache und Währung gefunden.</p>";
                 return;
             }
-
+    
             countryInfoDiv.innerHTML = matchingCountries.map((country, index) => {
                 return `
                     <div class="accordion" id="accordionExample">
@@ -132,17 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
             errorMessagesDiv.innerHTML = `<p class='text-danger'>Fehler beim Abrufen der Daten: ${error.message}</p>`;
         }
     }
+    
 
-    // Sprache und Währung-Daten laden
+    // Seite initial laden (Dropdowns befüllen)
     async function loadDropdowns() {
         try {
             const response = await fetch("https://restcountries.com/v3.1/all");
-            if (!response.ok) throw new Error("Fehler beim Laden der Dropdown-Daten");
+            if (!response.ok) throw new Error("Fehler beim Laden der Länder");
 
             const countryData = await response.json();
+
             const languages = new Set();
             const currencies = new Set();
-            const regions = new Set();
 
             countryData.forEach(country => {
                 if (country.languages) {
@@ -151,37 +148,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (country.currencies) {
                     Object.values(country.currencies).forEach(currency => currencies.add(currency.name));
                 }
-                if (country.region) {
-                    regions.add(country.region);
-                }
             });
 
-            languages.forEach(language => {
+            // Dropdowns alphabetisch sortieren
+            const languageArray = Array.from(languages).sort();
+            const currencyArray = Array.from(currencies).sort();
+
+            languageArray.forEach(language => {
                 const option = document.createElement("option");
                 option.value = language;
                 option.textContent = language;
                 languageDropdown.appendChild(option);
             });
 
-            currencies.forEach(currency => {
+            currencyArray.forEach(currency => {
                 const option = document.createElement("option");
                 option.value = currency;
                 option.textContent = currency;
                 currencyDropdown.appendChild(option);
             });
-
-            regions.forEach(region => {
-                const option = document.createElement("option");
-                option.value = region;
-                option.textContent = region;
-                regionDropdown.appendChild(option);
-            });
         } catch (error) {
-            errorMessagesDiv.innerHTML = `<p class='text-danger'>Fehler beim Laden der Dropdown-Optionen: ${error.message}</p>`;
+            console.error("Fehler beim Laden der Dropdowns:", error);
         }
     }
 
-    // Initialisiere Dropdowns und Events
+    // Seite initial laden
     loadDropdowns();
+
+    // Such-Button: Aufruf der Filterfunktion
     searchButton.addEventListener("click", fetchLanguageAndCurrencyData);
 });
