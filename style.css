@@ -134,6 +134,7 @@ button#searchButton:hover {
         display: block; /* Sicherstellen, dass sie Block-Elemente sind */
         box-sizing: border-box; /* Sicherstellen, dass Padding und Border die Breite nicht beeinflussen */
     }
+    
 
     /* Entfernen von Hover-Effekten für ein besseres mobiles Verhalten (optional) */
     button#searchButton:hover,

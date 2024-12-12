@@ -237,6 +237,7 @@ manualLanguageInput.addEventListener("input", () => {
             console.error(`Fehler beim Abrufen der Sprachen: ${error.message}`);
         }
     }
+    
 
     fetchLanguages(); // Sprachen beim Laden der Seite abrufen
 });
