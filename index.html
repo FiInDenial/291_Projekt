@@ -3,57 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta description zur SEO Optimierung -->
+    <meta name="description" content="Diese Webseite verwendet die REST Countries API um Länder nach Sprache und Währung zu suchen.">
     <title>Landinformationen nach Sprache und Währung</title>
-    <!-- Bootstrap Stylesheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Eigene Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Land nach Sprache und Währung suchen</h1>
-        <!-- Fehlerbereich -->
-        <div id="errorMessages" class="text-center"></div>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <!-- Spracheingabe und Dropdown -->
-                <div class="form-group">
-                    <label for="languageInput" class="form-label">Sprache: Sprache eingeben oder im Dropdown auswählen</label>
-                    <input type="text" id="languageInput" class="form-control" placeholder="Sprache eingeben (z.B. German)">
-                    <select id="languageDropdown" class="form-control">
-                        <option value="">Sprache wählen</option>
-                    </select>
-                </div>
+        <!-- Gesamte Seite in einer Card -->
+        <div class="card shadow-lg p-4">
+            <h1 class="text-center">Länder nach Sprache und Währung suchen</h1>
+            <div id="errorMessages" class="text-center alert alert-danger" role="alert" style="display: none;">
+                Hier können Fehlermeldungen stehen.
+            </div>
 
-                <!-- Währungseingabe und Dropdown -->
-                <div class="form-group">
-                    <label for="currencyInput" class="form-label">Währung: Währung eingeben oder im Dropdown auswählen</label>
-                    <input type="text" id="currencyInput" class="form-control" placeholder="Währung eingeben (z.B. Euro)">
-                    <select id="currencyDropdown" class="form-control">
-                        <option value="">Währung wählen</option>
-                    </select>
-                </div>
+            <main>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <!-- Manuelles Texteingabefeld für Sprache -->
+                    <div class="form-group">
+                        <label for="manualLanguageInput" class="form-label">Sprache manuell eingeben</label>
+                        <input type="text" id="manualLanguageInput" class="form-control" 
+                               placeholder="Sprache eingeben" maxlength="30" 
+                               pattern="[A-Za-zÄäÖöÜüß\\s]+" title="Nur Buchstaben und Leerzeichen erlaubt">
+                    </div>
 
-                <!-- Such-Button -->
-                <div class="text-center">
-                    <button id="searchButton" class="btn btn-primary">Suchen</button>
-                    <!-- Eingabe löschen Button -->
-                    <button id="clearButton" class="btn btn-danger ml-3">Eingabe löschen</button>
-                </div>
+                    <!-- Dropdown für Sprache -->
+                    <div class="form-group" id="languageDropdownGroup">
+                        <label for="languageDropdown" class="form-label">Sprache auswählen</label>
+                        <select id="languageDropdown" class="form-control">
+                            <option value="">Sprache wählen</option>
+                        </select>
+                    </div>
 
-                <!-- Ergebnisse -->
-                <div id="countryInfo" class="mt-4"></div>
+                    <!-- Währungs-Dropdown (nur angezeigt nach Sprachauswahl) -->
+                    <div class="form-group" id="currencyGroup" style="display:none;">
+                        <label for="currencyDropdown" class="form-label">Währung auswählen</label>
+                        <select id="currencyDropdown" class="form-control">
+                            <option value="">Währung wählen</option>
+                        </select>
+                    </div>
+
+                    <!-- Such-Button -->
+                    <div class="text-center">
+                        <button id="searchButton" class="btn btn-primary" disabled>Ergebnisse anzeigen</button>
+                        <button id="clearButton" class="btn btn-danger ml-3">Eingabe löschen</button>
+                    </div>
+
+                    <!-- Ergebnisse -->
+                    <div id="countryInfo" class="mt-4"></div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- jQuery (vollständige Version) -->
+</main>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- Popper.js (für Bootstrap 4) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Dein eigenes Skript -->
     <script src="script.js"></script>
 </body>
 </html>
