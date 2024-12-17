@@ -1,7 +1,11 @@
+/* Einbinden der Open Sans Schriftart */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
 /* Hintergrundfarbe des gesamten Dokuments */
 body {
     background-color: #b5c1f0;
     padding-bottom: 30px;
+    font-family: 'Open Sans', sans-serif; /* Anwendung von Open Sans */
 }
 
 /* Haupttitel */
@@ -13,6 +17,7 @@ h1 {
     color: white; /* Weißer Text für den Titel */
     padding: 15px;
     border-radius: 8px; /* Abgerundete Ecken */
+    font-family: 'Open Sans', sans-serif; /* Sicherstellen, dass auch der Titel Open Sans verwendet */
 }
 
 /* Fehlerbereich (Bootstrap Alert) */
@@ -20,6 +25,7 @@ h1 {
     font-size: 1.25rem; /* Erhöhte Schriftgröße */
     font-weight: 400;
     margin-bottom: 0px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* Gesamte Seite in einer Card */
@@ -28,6 +34,7 @@ h1 {
     border-radius: 12px; /* Abgerundete Ecken */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Weicher Schatten */
     padding: 20px; /* Innenabstand in der Karte */
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* Formularüberschrift */
@@ -36,6 +43,7 @@ h1 {
     font-weight: bold;
     margin-bottom: 10px;
     display: block;
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* Formularfelder */
@@ -43,7 +51,9 @@ h1 {
     width: 100%;
     margin-bottom: 15px;
     border-radius: 6px; /* Abgerundete Kanten für Felder */
+    font-family: 'Open Sans', sans-serif;
 }
+
 
 /* Such-Button */
 button#searchButton {
@@ -55,10 +65,20 @@ button#searchButton {
     border: none;
     border-radius: 6px; /* Abgerundete Kanten */
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Übergang für Farbe und Skalierung */
+    font-family: 'Open Sans', sans-serif;
 }
 
 button#searchButton:hover {
     background-color: #162d70; /* Dunkleres Blau beim Hover */
+    transform: scale(1.1); /* Button wird bei Hover größer */
+}
+
+/* Deaktivierter Zustand des Suchbuttons */
+button#searchButton:disabled {
+    background-color: black; /* Schwarzer Hintergrund, wenn deaktiviert */
+    cursor: not-allowed; /* Mauszeiger zeigt, dass der Button deaktiviert ist */
+    opacity: 0.6; /* Button weniger sichtbar */
 }
 
 /* Roter Eingabe löschen Button */
@@ -71,10 +91,13 @@ button#searchButton:hover {
     font-weight: bold;
     border-radius: 6px; /* Abgerundete Kanten */
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Übergang für Farbe und Skalierung */
+    font-family: 'Open Sans', sans-serif;
 }
 
 #clearButton:hover {
     background-color: rgb(140, 15, 15);
+    transform: scale(1.1); /* Button wird bei Hover größer */
 }
 
 /* Abstand über den Suchergebnissen */
@@ -87,7 +110,6 @@ button#searchButton:hover {
     margin-top: 20px;
     border: 1px solid #9b7ad1;
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1); /* Weicher Schatten */
-
 }
 
 /* Flaggen im Accordion-Titel (klein) */
@@ -110,37 +132,41 @@ button#searchButton:hover {
     font-weight: bold; /* Fettschrift */
     color: #000000; /* Dunkelblaue Farbe */
     text-decoration: none; /* Keine Unterstreichung */
+    font-family: 'Open Sans', sans-serif;
 }
 
 .accordion .card-header .btn:hover {
     color: #5773c6; /* Leicht helleres Blau beim Hover */
 }
 
+
 /* Mobile Ansicht: Buttons untereinander mit Abstand */
 @media (max-width: 990px) {
-    /* Stellt sicher, dass der Container, in dem sich die Buttons befinden, flexibel ist */
+    /* Container für die Buttons */
     #countryInfo {
         display: flex;
         flex-direction: column; /* Anordnung der Elemente vertikal */
         gap: 15px; /* Abstand zwischen den Buttons */
-        align-items: stretch; /* Stellt sicher, dass die Buttons die volle Breite haben */
+        align-items: stretch; /* Stellt sicher, dass die Buttons die gesamte Breite haben */
     }
 
-    /* Buttons selbst erhalten volle Breite und Abstand */
+    /* Buttons nehmen die gesamte Breite des Containers ein und haben Abstand */
     button#searchButton,
     #clearButton {
         width: 100%; /* Buttons nehmen die gesamte Breite des Containers ein */
         margin-bottom: 15px; /* Abstand zwischen den Buttons */
+        margin-left: 0px;
         display: block; /* Sicherstellen, dass sie Block-Elemente sind */
         box-sizing: border-box; /* Sicherstellen, dass Padding und Border die Breite nicht beeinflussen */
     }
-    
 
-    /* Entfernen von Hover-Effekten für ein besseres mobiles Verhalten (optional) */
+    .ml-3, .mx-3 {
+        margin-left: 0px !important;
+    }
+
+    /* Optional: Entfernen von Hover-Effekten für ein besseres mobiles Verhalten */
     button#searchButton:hover,
     #clearButton:hover {
         background-color: initial;
     }
 }
-
-
