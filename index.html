@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container mt-5">
         <!-- Gesamte Seite in einer Card -->
@@ -19,52 +21,49 @@
             </div>
 
             <main>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <!-- Manuelles Texteingabefeld für Sprache -->
-                    <div class="form-group">
-                        <label for="manualLanguageInput" class="form-label">Sprache manuell eingeben</label>
-                        <input type="text" id="manualLanguageInput" class="form-control" 
-                               placeholder="Sprache eingeben" maxlength="30" 
-                               pattern="[A-Za-zÄäÖöÜüß\\s]+" title="Nur Buchstaben und Leerzeichen erlaubt">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <!-- Manuelles Texteingabefeld für Sprache -->
+                        <div class="form-group">
+                            <label for="manualLanguageInput" class="form-label">Sprache manuell eingeben</label>
+                            <input type="text" id="manualLanguageInput" class="form-control" placeholder="Sprache eingeben" maxlength="30" pattern="[A-Za-zÄäÖöÜüß\\s]+" title="Nur Buchstaben und Leerzeichen erlaubt">
+                        </div>
+
+                        <!-- Dropdown für Sprache -->
+                        <div class="form-group" id="languageDropdownGroup">
+                            <label for="languageDropdown" class="form-label">Sprache auswählen</label>
+                            <select id="languageDropdown" class="form-control">
+                                <option value="">Sprache wählen</option>
+                            </select>
+                        </div>
+
+                        <!-- Währungs-Dropdown (nur angezeigt nach Sprachauswahl) -->
+                        <div class="form-group" id="currencyGroup" style="display:none;">
+                            <label for="currencyDropdown" class="form-label">Währung auswählen</label>
+                            <select id="currencyDropdown" class="form-control">
+                                <option value="">Währung wählen</option>
+                            </select>
+                        </div>
+
+                        <!-- Such-Button -->
+                        <div class="text-center">
+                            <button id="searchButton" class="btn btn-primary" disabled>Ergebnisse anzeigen</button>
+                            <button id="clearButton" class="btn btn-danger ml-3">Eingabe löschen</button>
+                        </div>
+
+                        <!-- Ergebnisse -->
+                        <div id="countryInfo" class="mt-4"></div>
                     </div>
-
-                    <!-- Dropdown für Sprache -->
-                    <div class="form-group" id="languageDropdownGroup">
-                        <label for="languageDropdown" class="form-label">Sprache auswählen</label>
-                        <select id="languageDropdown" class="form-control">
-                            <option value="">Sprache wählen</option>
-                        </select>
-                    </div>
-
-                    <!-- Währungs-Dropdown (nur angezeigt nach Sprachauswahl) -->
-                    <div class="form-group" id="currencyGroup" style="display:none;">
-                        <label for="currencyDropdown" class="form-label">Währung auswählen</label>
-                        <select id="currencyDropdown" class="form-control">
-                            <option value="">Währung wählen</option>
-                        </select>
-                    </div>
-
-                    <!-- Such-Button -->
-                    <div class="text-center">
-                        <button id="searchButton" class="btn btn-primary" disabled>Ergebnisse anzeigen</button>
-                        <button id="clearButton" class="btn btn-danger ml-3">Eingabe löschen</button>
-                    </div>
-
-
-                    <!-- Ergebnisse -->
-                    <div id="countryInfo" class="mt-4"></div>
-                 
-</div>
                 </div>
-            </div>
+            </main>
         </div>
-
     </div>
-</main>
+
+    <!-- Bootstrap und eigene js Datei einbinden -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
